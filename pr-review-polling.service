@@ -1,0 +1,9 @@
+[Unit]
+Description=Check GitHub PR status
+
+[Service]
+Type=simple
+ExecStart=bash /usr/local/bin/pr-review-polling.sh
+
+[Install]
+WantedBy=default.target

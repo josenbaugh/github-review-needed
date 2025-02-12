@@ -45,7 +45,7 @@ do
     if [ $TOTAL -ne 0 ]; then
         systemd-cat echo "Filling file with urls"
         echo $GITHUB_RESPONSE | jq '.items.[] | .title + "    " + .url' | sed 's/api.//' | sed 's/repos\///' | sed 's/issues/pull/' | sed 's/"//g' > $STATUSFILE
-        dunstify -A "cat ~/.pr-reviews | dmenu | awk -F'    ' '{print $2}' | xargs firefox",ACCEPT "You have $TOTAL PR(s) needing review!" | /bin/bash
+        dunstify -A "cat ~/.pr-reviews | dmenu | awk -F'    ' '{print \$2}' | xargs firefox",ACCEPT "You have $TOTAL PR(s) needing review!" | /bin/bash
         systemd-cat echo "sleeping 60"
         sleep 60
         continue
@@ -56,9 +56,9 @@ do
             notify-send "PR Status" "All PRs have now been reviewed! 🎉"
             systemd-cat echo "Clearing file"
             : > $STATUSFILE
-            systemd-cat echo "sleeping 30"
-            sleep 30
         fi
     fi
+    systemd-cat echo "Finished checking PRs for Reviews. Sleeping 30s"
+    sleep 30
 done
 
